@@ -1,9 +1,6 @@
 package com.nelio.udemy.project.entities;
 
-import ch.qos.logback.core.net.server.Client;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 
@@ -33,7 +30,6 @@ public class User implements Serializable {
         this.email = email;
         this.password = password;
         this.phone = phone;
-        this.orders = orders;
     }
 
     public List<Order> getOrders() {
