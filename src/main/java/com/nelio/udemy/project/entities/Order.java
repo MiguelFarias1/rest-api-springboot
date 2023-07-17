@@ -2,15 +2,13 @@ package com.nelio.udemy.project.entities;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.nelio.udemy.project.entities.enumns.OrderStatus;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.EqualsAndHashCode;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import java.io.Serializable;
 import java.time.Instant;
 
-@AllArgsConstructor
 @NoArgsConstructor
 @EqualsAndHashCode(of = {"id", "instant"})
 @Entity
@@ -24,32 +22,25 @@ public class Order implements Serializable {
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd/MM/yyyy 'T' HH:mm:ss 'Z'", timezone = "GMT")
     private Instant instant;
 
+    private Integer status;
+
     @ManyToOne
     @JoinColumn(name = "client_id")
     @JsonIgnore
     private User client;
 
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
+    public Order(Long id, Instant instant, OrderStatus status, User client) {
         this.id = id;
-    }
-
-    public Instant getInstant() {
-        return instant;
-    }
-
-    public void setInstant(Instant instant) {
         this.instant = instant;
-    }
-
-    public User getClient() {
-        return client;
-    }
-
-    public void setClient(User client) {
+        setOrderStatus(status);
         this.client = client;
+    }
+
+    public OrderStatus getOrderStatus() {
+        return OrderStatus.fromInt(status);
+    }
+
+    public void setOrderStatus(OrderStatus status) {
+        this.status = status.getCode();
     }
 }
