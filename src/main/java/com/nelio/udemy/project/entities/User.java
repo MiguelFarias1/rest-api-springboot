@@ -13,7 +13,7 @@ import java.io.Serializable;
 @Data
 @EqualsAndHashCode(of = {"id" ,"name"})
 @Entity
-@Table(name = "User")
+@Table(name = "tb_user")
 public class User implements Serializable {
 
     @Id
