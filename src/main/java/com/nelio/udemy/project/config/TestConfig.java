@@ -6,13 +6,17 @@ import com.nelio.udemy.project.repositories.*;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Profile;
+import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 
 import java.math.BigDecimal;
 import java.time.Instant;
+import java.time.ZoneId;
+import java.time.temporal.ChronoUnit;
 import java.util.Arrays;
 import java.util.List;
 
 @Configuration
+@EnableJpaRepositories({"com.nelio.udemy.project.repositories"})
 @Profile("test")
 public class TestConfig implements CommandLineRunner {
 
@@ -80,5 +84,17 @@ public class TestConfig implements CommandLineRunner {
         OrderItem oi4 = new OrderItem(o3, p5, 2, p5.getPrice());
 
         orderItemRepository.saveAll(Arrays.asList(oi1,oi2,oi3,oi4));
+
+        var instant = Instant
+                .now()
+                .atZone(ZoneId.of("America/Fortaleza"))
+                .toInstant()
+                .minus(2, ChronoUnit.HOURS);
+
+        Payment payment = new Payment(instant, o1);
+
+        o1.setPayment(payment);
+
+        orderRepository.save(o1);
     }
 }

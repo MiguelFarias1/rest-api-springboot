@@ -1,5 +1,6 @@
 package com.nelio.udemy.project.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
@@ -25,6 +26,9 @@ public class Product implements Serializable {
     private BigDecimal price;
     private String imgURL;
 
+    @OneToMany(mappedBy = "id.product")
+    private Set<OrderItem> orders = new HashSet<>();
+
     @ManyToMany()
     @JoinTable(name = "tb_product_category",
             joinColumns = @JoinColumn(name = "product_id"),
@@ -37,4 +41,17 @@ public class Product implements Serializable {
         this.price = price;
         this.imgURL = imgURL;
     }
+
+    @JsonIgnore
+    public Set<Order> getOrders() {
+        Set<Order> set = new HashSet<>();
+
+        for(var element : orders) {
+            set.add(element.getOrder());
+        }
+
+        return set;
+    }
+
+
 }
