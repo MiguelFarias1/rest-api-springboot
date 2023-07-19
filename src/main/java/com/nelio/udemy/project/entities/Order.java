@@ -4,10 +4,13 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.nelio.udemy.project.entities.enumns.OrderStatus;
 import jakarta.persistence.*;
-import lombok.*;
+import lombok.EqualsAndHashCode;
+import lombok.NoArgsConstructor;
 
 import java.io.Serializable;
 import java.time.Instant;
+import java.util.HashSet;
+import java.util.Set;
 
 @NoArgsConstructor
 @EqualsAndHashCode(of = {"id", "instant"})
@@ -28,6 +31,9 @@ public class Order implements Serializable {
     @JoinColumn(name = "client_id")
     @JsonIgnore
     private User client;
+
+    @OneToMany(mappedBy = "id.order")
+    private Set<OrderItem> items = new HashSet<>();
 
     public Order(Long id, Instant instant, OrderStatus status, User client) {
         this.id = id;

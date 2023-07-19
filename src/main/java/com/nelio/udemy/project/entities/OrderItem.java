@@ -10,6 +10,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.io.Serializable;
+import java.math.BigDecimal;
 
 @NoArgsConstructor
 @EqualsAndHashCode(of = "id")
@@ -20,11 +21,11 @@ import java.io.Serializable;
 public class OrderItem implements Serializable {
 
     @EmbeddedId
-    private OrderItemPK id;
+    private OrderItemPK id = new OrderItemPK();
     private Integer quantity;
-    private Double price;
+    private BigDecimal price;
 
-    public OrderItem(Order order, Product product, Integer quantity, Double price) {
+    public OrderItem(Order order, Product product, Integer quantity, BigDecimal price) {
         this.id.setOrder(order);
         this.id.setProduct(product);
         this.quantity = quantity;
