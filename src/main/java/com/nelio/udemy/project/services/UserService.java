@@ -26,4 +26,8 @@ public class UserService {
         else
             throw new IllegalArgumentException("User not found !");
     }
+
+    public User insert(User user) {
+        return userRepository.save(user);
+    }
 }

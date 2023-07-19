@@ -50,4 +50,7 @@ public class OrderItem implements Serializable {
         id.setProduct(product);
     }
 
+    public Double getSubTotal() {
+        return price.doubleValue() * quantity;
+    }
 }

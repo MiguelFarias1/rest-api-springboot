@@ -10,7 +10,6 @@ import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 
 import java.math.BigDecimal;
 import java.time.Instant;
-import java.time.ZoneId;
 import java.time.temporal.ChronoUnit;
 import java.util.Arrays;
 import java.util.List;
@@ -85,11 +84,7 @@ public class TestConfig implements CommandLineRunner {
 
         orderItemRepository.saveAll(Arrays.asList(oi1,oi2,oi3,oi4));
 
-        var instant = Instant
-                .now()
-                .atZone(ZoneId.of("America/Fortaleza"))
-                .toInstant()
-                .minus(2, ChronoUnit.HOURS);
+        var instant = Instant.now().minus(2, ChronoUnit.HOURS);
 
         Payment payment = new Payment(instant, o1);
 
