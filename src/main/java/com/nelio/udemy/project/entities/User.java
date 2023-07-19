@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -11,7 +12,8 @@ import java.util.List;
 
 @NoArgsConstructor
 @EqualsAndHashCode(of = {"id" ,"name"})
-@Getter()
+@Getter
+@Setter
 @Entity
 @Table(name = "tb_user")
 public class User implements Serializable {
