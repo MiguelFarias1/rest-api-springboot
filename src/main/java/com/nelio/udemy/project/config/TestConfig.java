@@ -9,33 +9,36 @@ import com.nelio.udemy.project.repositories.CategoryRepository;
 import com.nelio.udemy.project.repositories.OrderRepository;
 import com.nelio.udemy.project.repositories.ProductReposityory;
 import com.nelio.udemy.project.repositories.UserRepository;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Profile;
 
 import java.math.BigDecimal;
 import java.time.Instant;
+import java.util.Arrays;
 import java.util.List;
 
 @Configuration
 @Profile("test")
 public class TestConfig implements CommandLineRunner {
 
-    @Autowired
-    private UserRepository userRepository;
+    private final UserRepository userRepository;
 
-    @Autowired
-    private OrderRepository orderRepository;
+    private final OrderRepository orderRepository;
 
-    @Autowired
-    private CategoryRepository categoryRepository;
+    private final CategoryRepository categoryRepository;
 
-    @Autowired
-    private ProductReposityory productReposityory;
+    private final ProductReposityory productReposityory;
+
+    public TestConfig(ProductReposityory productReposityory, UserRepository userRepository, OrderRepository orderRepository, CategoryRepository categoryRepository) {
+        this.productReposityory = productReposityory;
+        this.userRepository = userRepository;
+        this.orderRepository = orderRepository;
+        this.categoryRepository = categoryRepository;
+    }
 
     @Override
-    public void run(String... args) throws Exception {
+    public void run(String... args) {
 
         User u1 = new User("Maria Brown", "maria@gmail.com", "988888888", "123456");
         User u2 = new User("Alex Green", "alex@gmail.com", "977777777", "123456");
@@ -61,5 +64,15 @@ public class TestConfig implements CommandLineRunner {
         Product p5 = new Product( "Rails for Dummies", "Cras fringilla convallis sem vel faucibus.", BigDecimal.valueOf(100.99), "");
 
         productReposityory.saveAll(List.of(p1,p2,p3,p4,p5));
+
+        p1.getCategories().add(cat2);
+
+        p2.getCategories().add(cat1);
+
+        p2.getCategories().add(cat3);
+
+        p3.getCategories().add(cat2);
+
+        productReposityory.saveAll(Arrays.asList(p1,p2,p3,p4,p5));
     }
 }

@@ -1,5 +1,6 @@
 package com.nelio.udemy.project.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
@@ -21,7 +22,8 @@ public class Category implements Serializable {
     private Long id;
     private String name;
 
-    @Transient
+    @JsonIgnore
+    @OneToMany(mappedBy = "categories")
     private Set<Product> products = new HashSet<>();
 
     public Category(String name) {
